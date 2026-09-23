@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BharatHost — Domains, Hosting &amp; Business Services for India</title>
+  <meta name="description" content="BharatHost is India's trusted domain registrar and web hosting company. Get .com, .in domains, web hosting, business email, SSL certificates at the best prices. Made for Indian businesses, freelancers and startups." />
+  <meta name="keywords" content="domain registration India, web hosting India, buy domain India, .in domain, cheap hosting India, business email India, SSL certificate India, BharatHost" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="logo" id="logo-link">
+        <span class="logo-icon">&#127470;&#127475;</span>
+        <span class="logo-text">Bharat<span class="logo-accent">Host</span></span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#domains" class="nav-link">Domains</a></li>
+        <li><a href="#hosting" class="nav-link">Hosting</a></li>
+        <li><a href="#email" class="nav-link">Business Email</a></li>
+        <li><a href="#pricing" class="nav-link">Pricing</a></li>
+        <li><a href="#contact" class="nav-link">Support</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#login" class="btn-ghost" id="login-btn">Login</a>
+        <a href="#get-started" class="btn-primary" id="signup-btn">Get Started</a>
+      </div>
+      <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#domains">Domains</a>
+    <a href="#hosting">Hosting</a>
+    <a href="#email">Business Email</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Support</a>
+    <a href="#login" class="mob-login">Login</a>
+    <a href="#get-started" class="mob-signup">Get Started Free</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        India's Fastest Growing Domain &amp; Hosting Provider
+      </div>
+      <h1 class="hero-title">
+        Your Business Deserves<br />
+        <span class="gradient-text">A Home Online</span>
+      </h1>
+      <p class="hero-subtitle">
+        Register domains, launch websites, set up business email — all in one place.<br />
+        Built for <strong>Indian businesses</strong>, priced for <strong>every budget</strong>.
+      </p>
+
+      <!-- Domain Search -->
+      <div class="search-card" id="domain-search-card">
+        <div class="search-tabs">
+          <button class="search-tab active" id="tab-domain">Find a Domain</button>
+          <button class="search-tab" id="tab-transfer">Transfer Domain</button>
+          <button class="search-tab" id="tab-whois">WHOIS Lookup</button>
+        </div>
+        <div class="search-bar">
+          <input type="text" id="domain-input" class="search-input" placeholder="yourbuisness.in — check availability!" autocomplete="off" />
+          <button class="search-btn" id="search-btn">Search</button>
+        </div>
+        <div class="tld-chips">
+          <span class="tld-chip popular">.in &#8377;299/yr</span>
+          <span class="tld-chip">.com &#8377;699/yr</span>
+          <span class="tld-chip">.co.in &#8377;399/yr</span>
+          <span class="tld-chip">.net &#8377;799/yr</span>
+          <span class="tld-chip">.store &#8377;499/yr</span>
+          <span class="tld-chip">.online &#8377;349/yr</span>
+        </div>
+      </div>
+
+      <!-- Domain Result -->
+      <div class="domain-result" id="domain-result"></div>
+
+      <!-- Stats -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-row"><span class="stat-num" data-target="12000">0</span><span class="stat-plus">+</span></div>
+          <span class="stat-label">Domains Registered</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-row"><span class="stat-num" data-target="4800">0</span><span class="stat-plus">+</span></div>
+          <span class="stat-label">Happy Customers</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-row"><span class="stat-num" data-target="99">0</span><span class="stat-plus">%</span></div>
+          <span class="stat-label">Uptime Guarantee</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-row"><span class="stat-num" data-target="24">0</span><span class="stat-plus">/7</span></div>
+          <span class="stat-label">Hindi &amp; English Support</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <section class="trust-bar">
+    <div class="container">
+      <p class="trust-label">Trusted by businesses across India</p>
+      <div class="trust-logos">
+        <div class="trust-logo">&#127978; Local Shops</div>
+        <div class="trust-logo">&#128188; Freelancers</div>
+        <div class="trust-logo">&#128640; Startups</div>
+        <div class="trust-logo">&#127959; Agencies</div>
+        <div class="trust-logo">&#127891; Educators</div>
+        <div class="trust-logo">&#128722; E-commerce</div>
+        <div class="trust-logo">&#127973; Clinics</div>
+        <div class="trust-logo">&#9878; Law Firms</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="domains">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Everything You Need</span>
+        <h2 class="section-title">One Platform, All Your Online Needs</h2>
+        <p class="section-sub">From a simple domain to a full business presence — we've got you covered.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card" id="service-domains">
+          <div class="service-icon" style="background:linear-gradient(135deg,#FF6B35,#FF9F1C)">&#127760;</div>
+          <h3>Domain Registration</h3>
+          <p>Register .com, .in, .co.in and 500+ extensions. Instant activation with free DNS management and WHOIS privacy.</p>
+          <ul class="service-features">
+            <li>&#10003; Free DNS Management</li>
+            <li>&#10003; Free Domain Lock</li>
+            <li>&#10003; Free WHOIS Privacy</li>
+            <li>&#10003; Easy Transfer</li>
+          </ul>
+          <a href="#pricing" class="service-cta">View Domain Prices &#8594;</a>
+        </div>
+        <div class="service-card featured" id="service-hosting">
+          <div class="featured-badge">Most Popular</div>
+          <div class="service-icon" style="background:linear-gradient(135deg,#6C63FF,#3E8EFF)">&#9889;</div>
+          <h3>Web Hosting</h3>
+          <p>SSD-powered hosting with 99.9% uptime, 1-click WordPress install, free SSL and Indian data center servers.</p>
+          <ul class="service-features">
+            <li>&#10003; 99.9% Uptime SLA</li>
+            <li>&#10003; Free SSL Certificate</li>
+            <li>&#10003; 1-Click WordPress</li>
+            <li>&#10003; Indian Data Center</li>
+          </ul>
+          <a href="#hosting" class="service-cta">View Hosting Plans &#8594;</a>
+        </div>
+        <div class="service-card" id="email">
+          <div class="service-icon" style="background:linear-gradient(135deg,#11998E,#38EF7D)">&#128231;</div>
+          <h3>Business Email</h3>
+          <p>Professional email like you@yourbusiness.com. Powered by top-tier infrastructure with 5GB+ mailbox.</p>
+          <ul class="service-features">
+            <li>&#10003; Custom Domain Email</li>
+            <li>&#10003; 5GB Mailbox</li>
+            <li>&#10003; Spam Protection</li>
+            <li>&#10003; Mobile App Access</li>
+          </ul>
+          <a href="#pricing" class="service-cta">View Email Plans &#8594;</a>
+        </div>
+        <div class="service-card" id="ssl">
+          <div class="service-icon" style="background:linear-gradient(135deg,#F7971E,#FFD200)">&#128274;</div>
+          <h3>SSL Certificates</h3>
+          <p>Secure your website with DV, OV, and EV SSL certificates. Build customer trust and rank higher on Google.</p>
+          <ul class="service-features">
+            <li>&#10003; 256-bit Encryption</li>
+            <li>&#10003; Google Trust Boost</li>
+            <li>&#10003; Browser Padlock</li>
+            <li>&#10003; 24/7 Monitoring</li>
+          </ul>
+          <a href="#pricing" class="service-cta">View SSL Plans &#8594;</a>
+        </div>
+        <div class="service-card" id="wordpress">
+          <div class="service-icon" style="background:linear-gradient(135deg,#E96DD4,#FB7185)">&#127912;</div>
+          <h3>WordPress Hosting</h3>
+          <p>Managed WordPress hosting with automatic updates, daily backups, and built-in security.</p>
+          <ul class="service-features">
+            <li>&#10003; Auto Updates</li>
+            <li>&#10003; Daily Backups</li>
+            <li>&#10003; WP Security</li>
+            <li>&#10003; Staging Environment</li>
+          </ul>
+          <a href="#pricing" class="service-cta">View WP Plans &#8594;</a>
+        </div>
+        <div class="service-card" id="transfer-card">
+          <div class="service-icon" style="background:linear-gradient(135deg,#0099F7,#F11712)">&#128260;</div>
+          <h3>Domain Transfer</h3>
+          <p>Transfer your existing domains to BharatHost and get an extra year free. Simple, fast, and secure.</p>
+          <ul class="service-features">
+            <li>&#10003; +1 Year Free</li>
+            <li>&#10003; No Downtime</li>
+            <li>&#10003; Guided Process</li>
+            <li>&#10003; Lock &amp; Privacy</li>
+          </ul>
+          <a href="#" class="service-cta">Transfer Now &#8594;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing-section" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Transparent Pricing</span>
+        <h2 class="section-title">Simple Plans, No Surprises</h2>
+        <p class="section-sub">All prices in INR. No hidden fees. Cancel anytime.</p>
+      </div>
+
+      <div class="pricing-toggle-wrap">
+        <span class="toggle-label">Monthly</span>
+        <label class="toggle-switch" for="billing-toggle">
+          <input type="checkbox" id="billing-toggle" />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">Yearly <span class="save-badge">Save 30%</span></span>
+      </div>
+
+      <h3 class="pricing-category" id="hosting">Web Hosting Plans</h3>
+      <div class="pricing-grid">
+        <div class="pricing-card" id="plan-starter">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price">
+            <span class="currency">&#8377;</span>
+            <span class="amount" data-monthly="149" data-yearly="99">99</span>
+            <span class="period">/mo</span>
+          </div>
+          <p class="plan-billing" id="billing-starter">Billed &#8377;1,188/year</p>
+          <ul class="plan-features">
+            <li><span class="feat-ok">&#10003;</span> 1 Website</li>
+            <li><span class="feat-ok">&#10003;</span> 10 GB SSD Storage</li>
+            <li><span class="feat-ok">&#10003;</span> Free SSL Certificate</li>
+            <li><span class="feat-ok">&#10003;</span> 5 Business Emails</li>
+            <li><span class="feat-ok">&#10003;</span> 1-Click WordPress</li>
+            <li><span class="feat-no">&#10007;</span> Daily Backups</li>
+            <li><span class="feat-no">&#10007;</span> Free Domain</li>
+          </ul>
+          <a href="#" class="btn-plan" id="btn-starter">Get Starter</a>
+        </div>
+        <div class="pricing-card popular" id="plan-business">
+          <div class="popular-tag">&#11088; Best Value</div>
+          <div class="plan-name">Business</div>
+          <div class="plan-price">
+            <span class="currency">&#8377;</span>
+            <span class="amount" data-monthly="299" data-yearly="199">199</span>
+            <span class="period">/mo</span>
+          </div>
+          <p class="plan-billing" id="billing-business">Billed &#8377;2,388/year</p>
+          <ul class="plan-features">
+            <li><span class="feat-ok">&#10003;</span> Unlimited Websites</li>
+            <li><span class="feat-ok">&#10003;</span> 50 GB SSD Storage</li>
+            <li><span class="feat-ok">&#10003;</span> Free SSL Certificate</li>
+            <li><span class="feat-ok">&#10003;</span> 20 Business Emails</li>
+            <li><span class="feat-ok">&#10003;</span> 1-Click WordPress</li>
+            <li><span class="feat-ok">&#10003;</span> Daily Backups</li>
+            <li><span class="feat-ok">&#10003;</span> Free Domain (1 year)</li>
+          </ul>
+          <a href="#" class="btn-plan btn-plan-featured" id="btn-business">Get Business</a>
+        </div>
+        <div class="pricing-card" id="plan-pro">
+          <div class="plan-name">Pro</div>
+          <div class="plan-price">
+            <span class="currency">&#8377;</span>
+            <span class="amount" data-monthly="599" data-yearly="399">399</span>
+            <span class="period">/mo</span>
+          </div>
+          <p class="plan-billing" id="billing-pro">Billed &#8377;4,788/year</p>
+          <ul class="plan-features">
+            <li><span class="feat-ok">&#10003;</span> Unlimited Websites</li>
+            <li><span class="feat-ok">&#10003;</span> 100 GB NVMe Storage</li>
+            <li><span class="feat-ok">&#10003;</span> Wildcard SSL</li>
+            <li><span class="feat-ok">&#10003;</span> Unlimited Emails</li>
+            <li><span class="feat-ok">&#10003;</span> Managed WordPress</li>
+            <li><span class="feat-ok">&#10003;</span> Daily Backups</li>
+            <li><span class="feat-ok">&#10003;</span> 2 Free Domains</li>
+          </ul>
+          <a href="#" class="btn-plan" id="btn-pro">Get Pro</a>
+        </div>
+      </div>
+
+      <!-- Domain Table -->
+      <h3 class="pricing-category" style="margin-top:4rem">Domain Pricing</h3>
+      <div class="domain-table-wrap">
+        <table class="domain-table" id="domain-price-table">
+          <thead>
+            <tr><th>Extension</th><th>Register</th><th>Renew</th><th>Transfer</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="tld-name">.in</span> <span class="tld-badge india">&#127470;&#127475; India</span></td><td class="price-cell">&#8377;299<small>/yr</small></td><td class="price-cell">&#8377;399/yr</td><td class="price-cell">&#8377;299/yr</td><td><a href="#" class="btn-buy" id="buy-in">Buy</a></td></tr>
+            <tr><td><span class="tld-name">.com</span> <span class="tld-badge">Global</span></td><td class="price-cell">&#8377;699<small>/yr</small></td><td class="price-cell">&#8377;899/yr</td><td class="price-cell">&#8377;699/yr</td><td><a href="#" class="btn-buy" id="buy-com">Buy</a></td></tr>
+            <tr><td><span class="tld-name">.co.in</span> <span class="tld-badge india">&#127470;&#127475; India</span></td><td class="price-cell">&#8377;399<small>/yr</small></td><td class="price-cell">&#8377;499/yr</td><td class="price-cell">&#8377;399/yr</td><td><a href="#" class="btn-buy" id="buy-coin">Buy</a></td></tr>
+            <tr><td><span class="tld-name">.net</span></td><td class="price-cell">&#8377;799<small>/yr</small></td><td class="price-cell">&#8377;999/yr</td><td class="price-cell">&#8377;799/yr</td><td><a href="#" class="btn-buy" id="buy-net">Buy</a></td></tr>
+            <tr><td><span class="tld-name">.org</span></td><td class="price-cell">&#8377;799<small>/yr</small></td><td class="price-cell">&#8377;999/yr</td><td class="price-cell">&#8377;799/yr</td><td><a href="#" class="btn-buy" id="buy-org">Buy</a></td></tr>
+            <tr><td><span class="tld-name">.store</span> <span class="tld-badge ecom">E-commerce</span></td><td class="price-cell">&#8377;499<small>/yr</small></td><td class="price-cell">&#8377;699/yr</td><td class="price-cell">&#8377;499/yr</td><td><a href="#" class="btn-buy" id="buy-store">Buy</a></td></tr>
+            <tr><td><span class="tld-name">.online</span></td><td class="price-cell">&#8377;349<small>/yr</small></td><td class="price-cell">&#8377;549/yr</td><td class="price-cell">&#8377;349/yr</td><td><a href="#" class="btn-buy" id="buy-online">Buy</a></td></tr>
+            <tr><td><span class="tld-name">.shop</span> <span class="tld-badge ecom">E-commerce</span></td><td class="price-cell">&#8377;549<small>/yr</small></td><td class="price-cell">&#8377;749/yr</td><td class="price-cell">&#8377;549/yr</td><td><a href="#" class="btn-buy" id="buy-shop">Buy</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY BHARATHOST -->
+  <section class="why-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Why BharatHost</span>
+        <h2 class="section-title">Built for India, By Indians</h2>
+        <p class="section-sub">We understand the unique needs of Indian businesses — and we deliver.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card" id="why-india"><div class="why-icon">&#127470;&#127475;</div><h3>Made in India</h3><p>Proudly Indian company. Indian servers, Indian support team, Indian payment methods — UPI, cards, net banking.</p></div>
+        <div class="why-card" id="why-support"><div class="why-icon">&#128172;</div><h3>Hindi &amp; English Support</h3><p>Chat, email and phone support in your language. Available 24/7 to solve your problems fast.</p></div>
+        <div class="why-card" id="why-speed"><div class="why-icon">&#9889;</div><h3>Lightning Fast Servers</h3><p>NVMe SSD drives, Indian data centers and global CDN deliver blazing speeds to your Indian visitors.</p></div>
+        <div class="why-card" id="why-price"><div class="why-icon">&#128176;</div><h3>India-Friendly Pricing</h3><p>No dollar conversion surprises. Transparent INR pricing with no hidden fees. Plans from &#8377;99/month.</p></div>
+        <div class="why-card" id="why-security"><div class="why-icon">&#128272;</div><h3>Bank-Grade Security</h3><p>Free SSL, DDoS protection, daily malware scans, and automatic backups protect your business 24/7.</p></div>
+        <div class="why-card" id="why-uptime"><div class="why-icon">&#128225;</div><h3>99.9% Uptime SLA</h3><p>We guarantee your website stays online. Backed by redundant infrastructure and real-time monitoring.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Get Online in Minutes</span>
+        <h2 class="section-title">From Zero to Online in 4 Steps</h2>
+      </div>
+      <div class="steps-row">
+        <div class="step-item" id="step-1"><div class="step-number">01</div><div class="step-content"><h3>Search Your Domain</h3><p>Type your business name and find the perfect domain.</p></div></div>
+        <div class="step-arrow">&#8594;</div>
+        <div class="step-item" id="step-2"><div class="step-number">02</div><div class="step-content"><h3>Choose Your Plan</h3><p>Pick a hosting plan. Upgrade anytime as you grow.</p></div></div>
+        <div class="step-arrow">&#8594;</div>
+        <div class="step-item" id="step-3"><div class="step-number">03</div><div class="step-content"><h3>Pay Securely in &#8377;</h3><p>UPI, cards, net banking — pay the Indian way.</p></div></div>
+        <div class="step-arrow">&#8594;</div>
+        <div class="step-item" id="step-4"><div class="step-number">04</div><div class="step-content"><h3>Go Live!</h3><p>Domain and hosting activated instantly. Launch today.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Customer Love</span>
+        <h2 class="section-title">What Our Customers Say</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card" id="testimonial-1">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial-text">"BharatHost ne meri bakery ki website 30 minutes mein live kar di! Support team ne Hindi mein sab kuch explain kiya. Bahut achha service hai!"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar" style="background:linear-gradient(135deg,#FF6B35,#FF9F1C)">P</div>
+            <div><strong>Priya Sharma</strong><span>Sweet Dreams Bakery, Jaipur</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card" id="testimonial-2">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial-text">"As a freelance designer, I register domains for all my clients through BharatHost. Pricing is unbeatable and the panel is super easy to use."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar" style="background:linear-gradient(135deg,#6C63FF,#3E8EFF)">R</div>
+            <div><strong>Rahul Gupta</strong><span>Freelance Web Designer, Bengaluru</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card" id="testimonial-3">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial-text">"Migrated 15 client websites from a foreign host to BharatHost. Pages load 3x faster now because of Indian data centers. My clients are thrilled!"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar" style="background:linear-gradient(135deg,#11998E,#38EF7D)">A</div>
+            <div><strong>Ananya Iyer</strong><span>Digital Agency Owner, Chennai</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card" id="testimonial-4">
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="testimonial-text">"Started with just a .in domain for &#8377;299. Now I have hosting, business email, and SSL — all from BharatHost. One dashboard for everything!"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar" style="background:linear-gradient(135deg,#F7971E,#FFD200)">M</div>
+            <div><strong>Manish Patel</strong><span>E-commerce Entrepreneur, Surat</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-section" id="get-started">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-bg-shape"></div>
+        <div class="cta-content">
+          <h2>Ready to Take Your Business Online?</h2>
+          <p>Join thousands of Indian businesses that trust BharatHost. Start with a domain for just &#8377;299.</p>
+          <div class="cta-actions">
+            <a href="#hero" class="btn-cta-primary" id="cta-search-btn">Search Your Domain</a>
+            <a href="#contact" class="btn-cta-ghost" id="cta-support-btn">Talk to Support</a>
+          </div>
+          <p class="cta-note">&#128274; 30-day money-back guarantee &middot; No hidden fees &middot; Cancel anytime</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Get in Touch</span>
+        <h2 class="section-title">We're Here to Help</h2>
+        <p class="section-sub">Available 24/7 in Hindi &amp; English</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card" id="contact-chat"><div class="contact-icon">&#128172;</div><h3>Live Chat</h3><p>Chat with our support team instantly. Fastest way to get help.</p><a href="#" class="btn-contact" id="btn-livechat">Start Chat</a></div>
+        <div class="contact-card" id="contact-phone"><div class="contact-icon">&#128222;</div><h3>Call Us</h3><p>Call us between 9 AM – 9 PM. Hindi &amp; English support available.</p><a href="tel:+918000000000" class="btn-contact" id="btn-call">+91 80000 00000</a></div>
+        <div class="contact-card" id="contact-email"><div class="contact-icon">&#128231;</div><h3>Email Support</h3><p>Send us a detailed query. We respond within 4 hours on all working days.</p><a href="mailto:support@bharathost.in" class="btn-contact" id="btn-email">support@bharathost.in</a></div>
+        <div class="contact-card" id="contact-whatsapp"><div class="contact-icon">&#128241;</div><h3>WhatsApp</h3><p>Message us on WhatsApp for quick help in Hindi or English, anytime.</p><a href="https://wa.me/918000000000" class="btn-contact" id="btn-whatsapp">Chat on WhatsApp</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <span class="logo-icon">&#127470;&#127475;</span>
+            <span class="logo-text">Bharat<span class="logo-accent">Host</span></span>
+          </a>
+          <p class="footer-tagline">India's Trusted Domain &amp; Hosting Partner.<br />Proudly Made in India &#127470;&#127475;</p>
+          <div class="payment-icons">
+            <span class="pay-icon">UPI</span>
+            <span class="pay-icon">VISA</span>
+            <span class="pay-icon">MC</span>
+            <span class="pay-icon">Net Banking</span>
+            <span class="pay-icon">Paytm</span>
+          </div>
+        </div>
+        <div class="footer-links-grid">
+          <div class="footer-col"><h4>Domains</h4><ul><li><a href="#">Register Domain</a></li><li><a href="#">Transfer Domain</a></li><li><a href="#">Domain Renewal</a></li><li><a href="#">WHOIS Lookup</a></li><li><a href="#">Domain Pricing</a></li></ul></div>
+          <div class="footer-col"><h4>Hosting</h4><ul><li><a href="#">Web Hosting</a></li><li><a href="#">WordPress Hosting</a></li><li><a href="#">Business Email</a></li><li><a href="#">SSL Certificates</a></li><li><a href="#">Website Builder</a></li></ul></div>
+          <div class="footer-col"><h4>Company</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Blog</a></li><li><a href="#">Affiliates</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li></ul></div>
+          <div class="footer-col"><h4>Support</h4><ul><li><a href="#">Help Center</a></li><li><a href="#">Live Chat</a></li><li><a href="#">Status Page</a></li><li><a href="#">Contact Us</a></li><li><a href="#">Community</a></li></ul></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&#169; 2026 BharatHost Internet Services Pvt. Ltd. &middot; All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Refund Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

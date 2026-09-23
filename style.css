@@ -93,79 +93,12 @@ button {
   outline: none;
 }
 
-/* ==========================================================================
-   TOP UTILITY & TRUST BAR
-   ========================================================================== */
-.top-bar {
-  background: #090E1A;
-  color: #94A3B8;
-  font-size: 13px;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  width: 100%;
-}
-
-.top-bar-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.top-bar-left, .top-bar-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.top-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: #34D399;
-  font-weight: 500;
-}
-
-.pulse-dot {
-  width: 7px;
-  height: 7px;
-  background-color: #34D399;
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.2);
-}
-
-.top-divider {
-  color: rgba(255, 255, 255, 0.15);
-}
-
-.top-contact strong {
-  color: #F8FAFC;
-}
-
-.top-link {
-  color: #CBD5E1;
-  font-size: 13px;
-}
-
-.top-link:hover {
-  color: #FFFFFF;
-}
-
-.currency-selector {
-  color: #F8FAFC;
-  font-weight: 600;
-  background: rgba(255, 255, 255, 0.08);
-  padding: 2px 8px;
-  border-radius: 4px;
-}
-
 .cart-btn-header {
   color: #FFFFFF;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   background: var(--accent-saffron);
-  padding: 4px 12px;
+  padding: 8px 14px;
   border-radius: var(--radius-sm);
   display: inline-flex;
   align-items: center;

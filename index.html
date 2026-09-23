@@ -13,30 +13,6 @@
 </head>
 <body>
 
-  <!-- TOP TRUST & UTILITY BAR (GoDaddy Style) -->
-  <div class="top-bar">
-    <div class="container top-bar-inner">
-      <div class="top-bar-left">
-        <span class="top-badge"><span class="pulse-dot"></span> Mumbai DC: 100% Operational</span>
-        <span class="top-divider">|</span>
-        <span class="top-contact">📞 24/7 Helpline: <strong>1800-209-HOST</strong> (Toll-Free)</span>
-        <span class="top-divider">|</span>
-        <span class="top-lang">🗣️ Support in Hindi &amp; English</span>
-      </div>
-      <div class="top-bar-right">
-        <a href="#compare" class="top-link">Why BharatHost?</a>
-        <a href="#support" class="top-link">Knowledgebase</a>
-        <span class="top-divider">|</span>
-        <div class="currency-selector">
-          <span>🇮🇳 INR (₹)</span>
-        </div>
-        <button class="cart-btn-header" id="cart-header-btn" onclick="openCart()" aria-label="View Shopping Cart">
-          🛒 Cart <span class="cart-count" id="header-cart-count">0</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- MAIN NAVIGATION -->
   <nav class="navbar" id="navbar">
     <div class="container nav-inner">
@@ -72,6 +48,9 @@
       </ul>
 
       <div class="nav-actions">
+        <button class="cart-btn-header" id="cart-header-btn" onclick="openCart()" aria-label="View Shopping Cart">
+          🛒 Cart <span class="cart-count" id="header-cart-count">0</span>
+        </button>
         <button class="btn-nav-login" onclick="openLoginModal()">Sign In</button>
         <a href="#hosting" class="btn-nav-cta" id="nav-cta-btn">Get Started</a>
         <button class="hamburger" id="hamburger-btn" onclick="toggleMobileNav()" aria-label="Toggle navigation">

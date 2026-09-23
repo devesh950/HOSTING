@@ -1,6 +1,6 @@
 /* ==========================================================================
    BHARATHOST — ENTERPRISE CLOUD & DOMAIN REGISTRAR DESIGN SYSTEM
-   100% Mobile Responsive, High-Trust, Zero Horizontal Overflow
+   100% Mobile Responsive & Bulletproof Width Controls
    ========================================================================== */
 
 /* --- RESET & VARIABLES --- */
@@ -91,32 +91,6 @@ button {
   border: none;
   background: none;
   outline: none;
-}
-
-.cart-btn-header {
-  color: #FFFFFF;
-  font-size: 13px;
-  font-weight: 700;
-  background: var(--accent-saffron);
-  padding: 8px 14px;
-  border-radius: var(--radius-sm);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: background 0.2s;
-}
-
-.cart-btn-header:hover {
-  background: var(--accent-saffron-hover);
-}
-
-.cart-count {
-  background: #FFFFFF;
-  color: var(--accent-saffron);
-  padding: 1px 6px;
-  border-radius: 10px;
-  font-size: 11px;
-  font-weight: 800;
 }
 
 /* ==========================================================================
@@ -211,6 +185,32 @@ button {
   gap: 10px;
 }
 
+.cart-btn-header {
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 700;
+  background: var(--accent-saffron);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.cart-btn-header:hover {
+  background: var(--accent-saffron-hover);
+}
+
+.cart-count {
+  background: #FFFFFF;
+  color: var(--accent-saffron);
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
 .btn-nav-login {
   font-size: 14px;
   font-weight: 600;
@@ -286,6 +286,8 @@ button {
   margin-bottom: 16px;
   flex-wrap: wrap;
   justify-content: center;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .hero-pill-badge {
@@ -607,7 +609,7 @@ button {
 
 /* ==========================================================================
    SECTIONS & PRICING
-   ========================================================================== */
+   ========================================================================= */
 .section {
   padding: 60px 0;
   width: 100%;
@@ -655,16 +657,18 @@ button {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  width: 100%;
 }
 
 .billing-toggle {
-  display: inline-flex;
+  display: flex;
   background: #F1F5F9;
   padding: 4px;
   border-radius: 30px;
   border: 1px solid var(--border-light);
   max-width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .toggle-btn {
@@ -836,6 +840,7 @@ button {
   border-radius: 4px;
 }
 
+/* GUARANTEE BANNER (100% Mobile Safe) */
 .guarantee-banner {
   background: var(--bg-soft-blue);
   border: 1px solid #BFDBFE;
@@ -844,22 +849,27 @@ button {
   display: flex;
   align-items: center;
   gap: 16px;
-  flex-wrap: wrap;
+  margin-top: 30px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .guarantee-badge {
   background: #1D4ED8;
   color: #FFFFFF;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: 20px;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .guarantee-banner p {
   font-size: 13px;
   color: #1E3A8A;
+  line-height: 1.5;
+  margin: 0;
   flex: 1;
 }
 
@@ -1761,26 +1771,6 @@ button {
     padding: 0 14px;
   }
   
-  /* Top Bar Mobile Compact */
-  .top-bar-left .top-badge,
-  .top-bar-left .top-divider,
-  .top-bar-left .top-lang,
-  .top-bar-right .top-link,
-  .top-bar-right .top-divider,
-  .top-bar-right .currency-selector {
-    display: none;
-  }
-  .top-bar-inner {
-    justify-content: space-between;
-  }
-  .top-contact {
-    font-size: 11px;
-  }
-  .cart-btn-header {
-    font-size: 11px;
-    padding: 2px 8px;
-  }
-
   /* Nav Mobile */
   .nav-links, .btn-nav-login, .btn-nav-cta {
     display: none;
@@ -1875,6 +1865,24 @@ button {
     font-size: 14px;
   }
 
+  /* Guarantee Banner Mobile Fix */
+  .guarantee-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px;
+  }
+  .guarantee-badge {
+    white-space: normal;
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+  }
+  .guarantee-banner p {
+    font-size: 13px;
+    text-align: center;
+  }
+
   .footer-top {
     grid-template-columns: 1fr;
   }
@@ -1894,5 +1902,15 @@ button {
   }
   .hero-title {
     font-size: 24px;
+  }
+  .billing-toggle {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .toggle-btn {
+    padding: 6px 8px;
+    font-size: 11px;
+    flex: 1;
+    text-align: center;
   }
 }

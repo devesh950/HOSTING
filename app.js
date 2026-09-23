@@ -1,202 +1,432 @@
-// ===== NAVBAR SCROLL =====
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 40) navbar.classList.add('scrolled');
-  else navbar.classList.remove('scrolled');
-});
+/* ==========================================================================
+   BHARATHOST — ENTERPRISE CLIENT APPLICATION LOGIC
+   Domain Search Engine, Cart System, Pricing Engine, and Checkout Flow
+   ========================================================================== */
 
-// ===== HAMBURGER MENU =====
-const hamburger = document.getElementById('hamburger-btn');
-const mobileMenu = document.getElementById('mobile-menu');
-hamburger.addEventListener('click', () => {
-  mobileMenu.classList.toggle('open');
-});
-mobileMenu.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => mobileMenu.classList.remove('open'));
-});
-
-// ===== SEARCH TABS =====
-document.querySelectorAll('.search-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    const placeholders = {
-      'tab-domain': 'yourbuisness.in — check availability!',
-      'tab-transfer': 'Enter domain to transfer (e.g. mybusiness.com)',
-      'tab-whois': 'Enter domain for WHOIS lookup'
-    };
-    const btn = { 'tab-domain': 'Search', 'tab-transfer': 'Transfer', 'tab-whois': 'Lookup' };
-    document.getElementById('domain-input').placeholder = placeholders[tab.id] || '';
-    document.getElementById('search-btn').textContent = btn[tab.id] || 'Search';
-  });
-});
-
-// ===== DOMAIN SEARCH SIMULATION =====
-const DOMAIN_PRICES = {
-  '.in': 299, '.com': 699, '.co.in': 399,
-  '.net': 799, '.org': 799, '.store': 499,
-  '.online': 349, '.shop': 549
+// --- STATE MANAGEMENT ---
+const AppState = {
+  cart: [],
+  promoDiscount: 0,
+  promoCode: '',
+  activeBillingCycle: 'yearly', // 'monthly', 'yearly', 'triennial'
+  pricingData: {
+    starter: { monthly: 149, yearly: 99, triennial: 69, renew: { monthly: 149, yearly: 149, triennial: 149 } },
+    business: { monthly: 299, yearly: 199, triennial: 149, renew: { monthly: 299, yearly: 299, triennial: 299 } },
+    cloud: { monthly: 599, yearly: 399, triennial: 299, renew: { monthly: 599, yearly: 599, triennial: 599 } }
+  },
+  tldPrices: {
+    '.in': { price: 399, renew: 599, tag: 'India Top Choice' },
+    '.com': { price: 899, renew: 1199, tag: 'Global Standard' },
+    '.co.in': { price: 299, renew: 499, tag: 'Best Value' },
+    '.online': { price: 99, renew: 799, tag: '85% OFF' },
+    '.store': { price: 149, renew: 899, tag: 'E-Commerce' },
+    '.org': { price: 799, renew: 999, tag: 'Trust / NGO' }
+  }
 };
-// Simulate availability (random for demo, real version uses API)
-const TAKEN = ['google', 'facebook', 'amazon', 'flipkart', 'zomato', 'swiggy', 'paytm', 'ola'];
 
-function extractParts(input) {
-  let val = input.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '');
-  let tld = '';
-  const knownTlds = Object.keys(DOMAIN_PRICES).sort((a, b) => b.length - a.length);
-  for (const t of knownTlds) {
-    if (val.endsWith(t)) {
-      tld = t;
-      val = val.slice(0, val.length - t.length);
+// --- INITIALIZATION ---
+document.addEventListener('DOMContentLoaded', () => {
+  initNavbarScroll();
+  initBillingPrices();
+});
+
+// --- NAVBAR & MOBILE DRAWER ---
+function initNavbarScroll() {
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+}
+
+function toggleMobileNav() {
+  const drawer = document.getElementById('mobile-drawer');
+  const backdrop = document.getElementById('backdrop');
+  drawer.classList.toggle('open');
+  backdrop.classList.toggle('open');
+}
+
+function closeAllDrawers() {
+  document.getElementById('mobile-drawer').classList.remove('open');
+  document.getElementById('cart-drawer').classList.remove('open');
+  document.getElementById('backdrop').classList.remove('open');
+}
+
+// --- DOMAIN SEARCH ENGINE ---
+function quickFillTLD(tld) {
+  const tldSelect = document.getElementById('tld-select');
+  if (tldSelect) {
+    tldSelect.value = tld;
+  }
+  const input = document.getElementById('domain-input');
+  if (input) {
+    input.focus();
+    if (input.value.trim() !== '') {
+      handleSearch();
+    }
+  }
+}
+
+function handleSearch(event) {
+  if (event) event.preventDefault();
+
+  const input = document.getElementById('domain-input');
+  const rawQuery = input.value.trim().toLowerCase().replace(/https?:\/\//g, '').replace(/www\./g, '');
+
+  if (!rawQuery) {
+    showToast('⚠️ Please enter a domain name to search');
+    input.focus();
+    return;
+  }
+
+  // Sanitize query
+  let baseName = rawQuery;
+  let selectedTLD = document.getElementById('tld-select').value || '.in';
+
+  // If user typed extension directly (e.g. jaipurcrafts.com)
+  for (const ext in AppState.tldPrices) {
+    if (rawQuery.endsWith(ext)) {
+      baseName = rawQuery.replace(ext, '');
+      selectedTLD = ext;
+      document.getElementById('tld-select').value = ext;
       break;
     }
   }
-  if (!tld) tld = '.in'; // default
-  return { name: val || 'yourbusiness', tld };
+
+  // Remove trailing dots or special characters
+  baseName = baseName.replace(/[^a-z0-9-]/g, '');
+
+  if (baseName.length < 2) {
+    showToast('⚠️ Domain name must be at least 2 characters');
+    return;
+  }
+
+  const fullDomain = baseName + selectedTLD;
+  const tldInfo = AppState.tldPrices[selectedTLD] || { price: 399, renew: 599 };
+
+  // Generate suggestions
+  const suggestions = [
+    { domain: `${baseName}.co.in`, price: 299, tld: '.co.in' },
+    { domain: `${baseName}.in`, price: 399, tld: '.in' },
+    { domain: `${baseName}.com`, price: 899, tld: '.com' },
+    { domain: `get${baseName}.in`, price: 399, tld: '.in' },
+    { domain: `${baseName}.online`, price: 99, tld: '.online' },
+    { domain: `${baseName}.store`, price: 149, tld: '.store' }
+  ].filter(s => s.domain !== fullDomain).slice(0, 4);
+
+  const resultCard = document.getElementById('domain-result-card');
+  resultCard.style.display = 'block';
+
+  resultCard.innerHTML = `
+    <div class="domain-result-main">
+      <div class="result-info">
+        <div class="result-status-badge">✓ Available for Registration</div>
+        <div class="result-domain-name">${fullDomain}</div>
+        <div style="font-size: 13px; color: #16A34A; margin-top: 4px;">
+          🛡️ Includes Free Lifetime WHOIS Privacy &amp; 2-Step Domain Locking
+        </div>
+      </div>
+      <div class="result-pricing-box">
+        <div class="result-price-main">₹${tldInfo.price}<small style="font-size: 14px; font-weight: 500; color: #64748B;"> /1st yr</small></div>
+        <div class="result-price-sub">Renews at ₹${tldInfo.renew}/yr &bull; Plus Taxes</div>
+      </div>
+      <div class="result-actions">
+        <button class="btn-add-cart-large" onclick="addToCart('${fullDomain}', ${tldInfo.price}, 'domain')">
+          Add to Cart 🛒
+        </button>
+      </div>
+    </div>
+
+    <div class="result-suggestions">
+      <div class="suggestions-title">💡 Popular Available Alternatives for ${baseName}:</div>
+      <div class="suggestions-grid">
+        ${suggestions.map(s => `
+          <div class="suggest-item">
+            <div>
+              <span class="suggest-name">${s.domain}</span>
+              <span class="suggest-price"> — ₹${s.price}/yr</span>
+            </div>
+            <button class="btn-add-mini" onclick="addToCart('${s.domain}', ${s.price}, 'domain')">+ Add</button>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  // Scroll smoothly to results
+  resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  showToast(`🎉 ${fullDomain} is available!`);
 }
 
-function searchDomain() {
-  const input = document.getElementById('domain-input').value.trim();
-  const result = document.getElementById('domain-result');
-  if (!input) { result.innerHTML = ''; return; }
+// --- BILLING CYCLE & PRICING ENGINE ---
+function setBillingCycle(cycle) {
+  AppState.activeBillingCycle = cycle;
 
-  // Loading state
-  result.innerHTML = '<div class="result-loading"><span>🔍 Checking availability...</span></div>';
+  // Update active buttons
+  document.querySelectorAll('.billing-toggle .toggle-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cycle === cycle);
+  });
 
+  initBillingPrices();
+}
+
+function initBillingPrices() {
+  const cycle = AppState.activeBillingCycle;
+  const p = AppState.pricingData;
+
+  // Starter
+  document.getElementById('price-starter').innerText = p.starter[cycle];
+  document.getElementById('renew-starter').innerText = 
+    cycle === 'yearly' ? 'Renews at ₹149/mo • Billed ₹1,188/yr' :
+    cycle === 'triennial' ? 'Renews at ₹149/mo • Billed ₹2,484/3yrs (Best Value)' :
+    'Renews at ₹149/mo • Monthly Billing';
+
+  // Business
+  document.getElementById('price-business').innerText = p.business[cycle];
+  document.getElementById('renew-business').innerText = 
+    cycle === 'yearly' ? 'Renews at ₹299/mo • Free Domain Included' :
+    cycle === 'triennial' ? 'Renews at ₹299/mo • Billed ₹5,364/3yrs (Save ₹5,400)' :
+    'Renews at ₹299/mo • Monthly Billing';
+
+  // Cloud
+  document.getElementById('price-cloud').innerText = p.cloud[cycle];
+  document.getElementById('renew-cloud').innerText = 
+    cycle === 'yearly' ? 'Renews at ₹599/mo • Dedicated Resources' :
+    cycle === 'triennial' ? 'Renews at ₹599/mo • Billed ₹10,764/3yrs' :
+    'Renews at ₹599/mo • Monthly Billing';
+}
+
+function addHostingToCart(planName, planKey) {
+  const cycle = AppState.activeBillingCycle;
+  const monthlyRate = AppState.pricingData[planKey][cycle];
+  
+  let durationText = '1 Year (12 Months)';
+  let totalAmount = monthlyRate * 12;
+
+  if (cycle === 'monthly') {
+    durationText = '1 Month';
+    totalAmount = monthlyRate;
+  } else if (cycle === 'triennial') {
+    durationText = '3 Years (36 Months)';
+    totalAmount = monthlyRate * 36;
+  }
+
+  addToCart(`${planName} (${durationText})`, totalAmount, 'hosting');
+}
+
+// --- SHOPPING CART SYSTEM ---
+function addToCart(title, price, type) {
+  // Check if item already exists
+  const existingIndex = AppState.cart.findIndex(item => item.title === title);
+  if (existingIndex > -1) {
+    showToast(`🛒 ${title} is already in your cart!`);
+    openCart();
+    return;
+  }
+
+  AppState.cart.push({
+    id: Date.now() + Math.random(),
+    title: title,
+    price: price,
+    type: type
+  });
+
+  updateCartUI();
+  openCart();
+  showToast(`✓ Added ${title} to Cart!`);
+}
+
+function removeFromCart(id) {
+  AppState.cart = AppState.cart.filter(item => item.id !== id);
+  updateCartUI();
+  showToast('Item removed from cart');
+}
+
+function openCart() {
+  document.getElementById('cart-drawer').classList.add('open');
+  document.getElementById('backdrop').classList.add('open');
+}
+
+function closeCart() {
+  document.getElementById('cart-drawer').classList.remove('open');
+  document.getElementById('backdrop').classList.remove('open');
+}
+
+function updateCartUI() {
+  const count = AppState.cart.length;
+
+  // Header & Mobile badges
+  document.getElementById('header-cart-count').innerText = count;
+  document.getElementById('drawer-cart-count').innerText = `${count} ${count === 1 ? 'item' : 'items'}`;
+  const mobCount = document.getElementById('mob-cart-count');
+  if (mobCount) mobCount.innerText = count;
+
+  const emptyState = document.getElementById('empty-cart-state');
+  const itemsList = document.getElementById('cart-items-list');
+  const footer = document.getElementById('cart-drawer-footer');
+
+  if (count === 0) {
+    emptyState.style.display = 'block';
+    itemsList.style.display = 'none';
+    footer.style.display = 'none';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  itemsList.style.display = 'flex';
+  footer.style.display = 'block';
+
+  // Render items
+  itemsList.innerHTML = AppState.cart.map(item => `
+    <div class="cart-item-row">
+      <div class="cart-item-details">
+        <strong>${item.title}</strong>
+        <span>${item.type === 'domain' ? '1 Year Registration &bull; Free WHOIS Privacy' : 'NVMe Cloud Hosting &bull; Free SSL'}</span>
+      </div>
+      <div class="cart-item-pricing">
+        <div class="cart-item-price">₹${item.price.toLocaleString('en-IN')}</div>
+        <button class="cart-remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+      </div>
+    </div>
+  `).join('');
+
+  // Calculations
+  const subtotal = AppState.cart.reduce((sum, item) => sum + item.price, 0);
+  const discountAmount = Math.round(subtotal * AppState.promoDiscount);
+  const discountedSubtotal = subtotal - discountAmount;
+  const gstTax = Math.round(discountedSubtotal * 0.18);
+  const total = discountedSubtotal + gstTax;
+
+  document.getElementById('cart-subtotal').innerText = `₹${subtotal.toLocaleString('en-IN')}`;
+
+  const discountRow = document.getElementById('discount-row');
+  if (AppState.promoDiscount > 0) {
+    discountRow.style.display = 'flex';
+    document.getElementById('cart-discount').innerText = `-₹${discountAmount.toLocaleString('en-IN')}`;
+  } else {
+    discountRow.style.display = 'none';
+  }
+
+  document.getElementById('cart-tax').innerText = `₹${gstTax.toLocaleString('en-IN')}`;
+  document.getElementById('cart-total').innerText = `₹${total.toLocaleString('en-IN')}`;
+}
+
+// --- PROMO CODE ENGINE ---
+function applyPromo() {
+  const input = document.getElementById('promo-input');
+  const code = input.value.trim().toUpperCase();
+  const msg = document.getElementById('promo-msg');
+
+  if (!code) {
+    msg.innerHTML = '<span style="color: #DC2626;">Please enter a promo code</span>';
+    return;
+  }
+
+  if (code === 'BHARAT10') {
+    AppState.promoDiscount = 0.10;
+    AppState.promoCode = 'BHARAT10';
+    msg.innerHTML = '<span class="text-green">✓ BHARAT10 Applied! 10% Instant Discount</span>';
+    updateCartUI();
+    showToast('🎉 10% Discount Applied!');
+  } else if (code === 'FIRSTBUY') {
+    AppState.promoDiscount = 0.15;
+    AppState.promoCode = 'FIRSTBUY';
+    msg.innerHTML = '<span class="text-green">✓ FIRSTBUY Applied! 15% Welcome Discount</span>';
+    updateCartUI();
+    showToast('🎉 15% Discount Applied!');
+  } else {
+    msg.innerHTML = '<span style="color: #DC2626;">Invalid promo code. Try: BHARAT10</span>';
+  }
+}
+
+// --- CHECKOUT MODAL & PAYMENT SIMULATION ---
+function openCheckoutModal() {
+  if (AppState.cart.length === 0) {
+    showToast('⚠️ Your cart is empty');
+    return;
+  }
+
+  const subtotal = AppState.cart.reduce((sum, item) => sum + item.price, 0);
+  const discountAmount = Math.round(subtotal * AppState.promoDiscount);
+  const discountedSubtotal = subtotal - discountAmount;
+  const gstTax = Math.round(discountedSubtotal * 0.18);
+  const total = discountedSubtotal + gstTax;
+
+  document.getElementById('modal-total-amount').innerText = `₹${total.toLocaleString('en-IN')}`;
+
+  closeCart();
+  document.getElementById('checkout-modal').classList.add('open');
+}
+
+function closeCheckoutModal() {
+  document.getElementById('checkout-modal').classList.remove('open');
+}
+
+function switchPayTab(tabName, el) {
+  document.querySelectorAll('.payment-tabs .pay-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+
+  document.getElementById('pay-tab-upi').style.display = tabName === 'upi' ? 'block' : 'none';
+  document.getElementById('pay-tab-card').style.display = tabName === 'card' ? 'block' : 'none';
+  document.getElementById('pay-tab-netbanking').style.display = tabName === 'netbanking' ? 'block' : 'none';
+}
+
+function simulatePaymentSuccess() {
+  closeCheckoutModal();
+  showToast('🎉 Payment Verified! Welcome to BharatHost! Checking domain...');
+  
   setTimeout(() => {
-    const { name, tld } = extractParts(input);
-    const domain = name + tld;
-    const price = DOMAIN_PRICES[tld] || 499;
-    const isAvailable = !TAKEN.includes(name);
-
-    if (isAvailable) {
-      result.innerHTML = `
-        <div class="result-available">
-          <span class="result-icon">✅</span>
-          <div class="result-text">
-            <div class="result-domain">${domain}</div>
-            <div class="result-status">🎉 Available! Grab it before someone else does.</div>
-          </div>
-          <div class="result-price">₹${price}/yr</div>
-          <button class="result-btn" onclick="addToCart('${domain}', ${price})">Add to Cart</button>
-        </div>`;
-    } else {
-      // Suggest alternatives
-      const alts = ['.net', '.store', '.online', '.co.in'].filter(t => t !== tld);
-      const altHtml = alts.slice(0, 3).map(t =>
-        `<a href="#" class="tld-chip" style="margin-right:6px" onclick="suggestDomain('${name}${t}')">${name}${t} <strong>₹${DOMAIN_PRICES[t]}/yr</strong></a>`
-      ).join('');
-      result.innerHTML = `
-        <div class="result-taken">
-          <span class="result-icon">❌</span>
-          <div class="result-text">
-            <div class="result-domain">${domain}</div>
-            <div class="result-status">This domain is already taken. Try these alternatives:</div>
-            <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">${altHtml}</div>
-          </div>
-        </div>`;
-    }
-  }, 900);
+    alert('✅ ORDER SUCCESSFUL!\n\nThank you for choosing BharatHost.\nYour domain & hosting credentials have been generated.\nOfficial GST Tax Invoice has been sent to your email.');
+    AppState.cart = [];
+    AppState.promoDiscount = 0;
+    updateCartUI();
+  }, 1000);
 }
 
-function addToCart(domain, price) {
-  alert(`✅ ${domain} added to cart!\n\nPrice: ₹${price}/year\n\n(This is a demo — in the live site this will take you to checkout)`);
+// --- LOGIN MODAL ---
+function openLoginModal() {
+  document.getElementById('login-modal').classList.add('open');
 }
 
-function suggestDomain(domain) {
-  document.getElementById('domain-input').value = domain;
-  searchDomain();
+function closeLoginModal() {
+  document.getElementById('login-modal').classList.remove('open');
 }
 
-document.getElementById('search-btn').addEventListener('click', searchDomain);
-document.getElementById('domain-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') searchDomain();
-});
-
-// TLD chip click — fill search
-document.querySelectorAll('.tld-chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    const tld = chip.textContent.split(' ')[0];
-    const current = document.getElementById('domain-input').value.split('.')[0] || 'yourbusiness';
-    document.getElementById('domain-input').value = current + tld;
-    searchDomain();
-  });
-});
-
-// ===== PRICING TOGGLE =====
-const billingToggle = document.getElementById('billing-toggle');
-billingToggle.addEventListener('change', () => {
-  const isYearly = billingToggle.checked;
-  document.querySelectorAll('.amount').forEach(el => {
-    el.textContent = isYearly ? el.dataset.yearly : el.dataset.monthly;
-  });
-  // Update billing text
-  const billings = {
-    'billing-starter': isYearly ? 'Billed ₹1,188/year' : 'Billed ₹149/month',
-    'billing-business': isYearly ? 'Billed ₹2,388/year' : 'Billed ₹299/month',
-    'billing-pro': isYearly ? 'Billed ₹4,788/year' : 'Billed ₹599/month'
-  };
-  Object.entries(billings).forEach(([id, text]) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = text;
-  });
-});
-
-// ===== COUNTER ANIMATION =====
-function animateCounter(el) {
-  const target = parseInt(el.dataset.target, 10);
-  const duration = 2000;
-  const step = target / (duration / 16);
-  let current = 0;
-  const timer = setInterval(() => {
-    current = Math.min(current + step, target);
-    el.textContent = Math.floor(current).toLocaleString('en-IN');
-    if (current >= target) clearInterval(timer);
-  }, 16);
+function handleLogin(event) {
+  event.preventDefault();
+  closeLoginModal();
+  showToast('✓ Logged in successfully to BharatHost cPanel & Portal!');
 }
 
-const statsObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.querySelectorAll('.stat-num').forEach(animateCounter);
-      statsObserver.unobserve(entry.target);
-    }
+// --- FAQ ACCORDION ---
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isActive = item.classList.contains('active');
+
+  document.querySelectorAll('.faq-item').forEach(i => {
+    i.classList.remove('active');
+    const chevron = i.querySelector('.faq-chevron');
+    if (chevron) chevron.innerText = '+';
   });
-}, { threshold: 0.3 });
 
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) statsObserver.observe(heroStats);
+  if (!isActive) {
+    item.classList.add('active');
+    const chevron = item.querySelector('.faq-chevron');
+    if (chevron) chevron.innerText = '−';
+  }
+}
 
-// ===== SCROLL REVEAL =====
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.service-card, .why-card, .pricing-card, .testimonial-card, .contact-card, .step-item').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(30px)';
-  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-  revealObserver.observe(el);
-});
-
-// ===== PLAN BUTTON INTERACTIONS =====
-document.querySelectorAll('.btn-plan, .btn-buy').forEach(btn => {
-  btn.addEventListener('click', e => {
-    e.preventDefault();
-    const plan = btn.closest('.pricing-card, tr');
-    const name = plan ? (plan.querySelector('.plan-name, .tld-name') || {}).textContent : 'this plan';
-    alert(`You selected ${name}!\n\n(In the live site, this will take you to checkout with payment options: UPI, Cards, Net Banking, Paytm)`);
-  });
-});
-
-// Smooth CTA button scroll
-document.getElementById('cta-search-btn').addEventListener('click', e => {
-  e.preventDefault();
-  document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
-  setTimeout(() => document.getElementById('domain-input').focus(), 800);
-});
+// --- TOAST NOTIFICATION ---
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.innerText = message;
+  toast.classList.add('show');
+  
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3500);
+}
